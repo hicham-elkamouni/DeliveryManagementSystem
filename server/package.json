@@ -1,0 +1,20 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "ISC",
+  "scripts": {
+    "dev": "nodemon --exec babel-node App.js"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.16.0",
+    "@babel/node": "^7.16.0",
+    "@babel/preset-env": "^7.16.4",
+    "nodemon": "^2.0.15"
+  },
+  "dependencies": {
+    "dotenv": "^14.1.1",
+    "express": "^4.17.2",
+    "mongoose": "^6.1.7"
+  }
+}
