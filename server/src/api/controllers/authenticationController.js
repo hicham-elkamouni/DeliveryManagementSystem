@@ -1,27 +1,29 @@
-import Admin from "../models/Admin.js"
+import User from "../models/User.js"
 import { createToken } from "../helpers";
 
-const loginAdmin = (req, res) => {
+const login = (req, res) => {
     const {
         email,
         password
     } = req.body;
 
-    Admin.findOne({email}, (err, admin) => {
-        if (err || !admin) {
+    User.findOne({
+        email
+    }, (err, result) => {
+        if (err || !result) {
             return res.status(400).json({
                 isLogged: false,
                 error: 'User not Found with this email@'
             })
         }
-        if (!admin.authenticate(password)) {
+        if (!result.authenticate(password)) {
             return res.status(401).json({
                 isLogged: false,
                 error: 'Email and Password dont Match !'
             })
         }
 
-        const token = createToken({ admin }, "ADMIN");
+        const token = createToken({ result }, result.role);
         res.cookie('token', token, {
             expires: new Date(Date.now() + 4 * 3600000)
         })
@@ -29,11 +31,12 @@ const loginAdmin = (req, res) => {
             ? res.status(200).json({ isLogged: true, token })
             : res.status(500).json({ isLogged: false, error: "cant create token" });
     })
-    
 
 }
-
-
-export {
-    loginAdmin
+const logout = (req, res) => {
+    res.clearCookie('token');
+    res.json({
+        message: "Logout"
+    })
 }
+export { login, logout }

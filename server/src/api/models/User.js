@@ -1,17 +1,17 @@
 const mongoose = require('mongoose');
 const crypto = require('crypto')
 import { v4 as uuidv4 } from 'uuid';
-const adminSchema = new mongoose.Schema({
-  username: {
-    type: String,
-    trim: true,
-    required: true,
-  },
+const userSchema = new mongoose.Schema({
   email: {
     type: String,
     trim: true,
     required: true,
     unique: true,
+  },
+  role: {
+    type: String,
+    trim: true,
+    required: true,
   },
   hashed_password: {
     type: String,
@@ -22,9 +22,9 @@ const adminSchema = new mongoose.Schema({
   }
 }, {
   timestamps: true
-});
+},{collection:"users"});
 //Create virtual champs 'password'
-adminSchema.virtual('password')
+userSchema.virtual('password')
   .set(function (password) {
     this._password = password;
     this.salt = uuidv4();
@@ -34,7 +34,7 @@ adminSchema.virtual('password')
     return this._password
   })
 //Create method for crypt password
-adminSchema.methods = {
+userSchema.methods = {
   authenticate: function(pass){
     return this.cryptPass(pass) === this.hashed_password;
   },
@@ -49,4 +49,4 @@ adminSchema.methods = {
     }
   }
 }
-module.exports = mongoose.model('Admin',adminSchema);
+module.exports = mongoose.model('User',userSchema);
