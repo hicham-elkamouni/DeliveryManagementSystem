@@ -36,9 +36,9 @@ const addVehicleType = async (req, res) => {
 }
 
 const deleteVehicleType = async (req, res) => {
-
+    console.log(params.id);
     try{
-        const { name } = req.body  
+        const { id } = req.params  
         const vehicleType = await VehicleType.create({ name });
         return res.status(201).json({
             success : true,
