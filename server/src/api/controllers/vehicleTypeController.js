@@ -1,39 +1,57 @@
 import VehicleType from "../models/VehicleType.js";
 import User from "../models/User.js";
 
+const getAllVehicleType = async (req, res) => {
 
-// const getVehicleType = async (req, res) => {
-
-//     // VehicleType.find((err, vehicleTypes) => {})
-
-//     // VehicleType.find((err, vehicleTypes) => {
-//     //     if(err){
-//     //         return res.status(400).json({
-//     //             error: 'error'
-//     //         })
-//     //     }
-//     //     return res.status(200).json({
-//     //         vehicleTypes: vehicleTypes
-//     //     })
-//     // })
+    try {
+        const docs = await VehicleType.find({name:"car"});
+        return res.status(200).json({
+            success : true,
+            results : docs
+        })
+    }catch(err){
+        return res.status(400).json({
+            success : false,
+            error: err.message
+        })
+    }
     
-//     const results = await VehicleType.findOne({name:"car"});
-//     console.log(results);
+}
 
-//     // return res.status(200).json({
-//     //     results : results
-//     // })
+const addVehicleType = async (req, res) => {
 
-// }
+    try{
+        const { name } = req.body  
+        const vehicleType = await VehicleType.create({ name });
+        return res.status(201).json({
+            success : true,
+            results : vehicleType
+        })
+    }catch(err){
+        return res.status(400).json({
+            success : false,
+            error: err.message
+        })
+    }
+}
 
-const getVehicleType = async (req, res) => {
+const deleteVehicleType = async (req, res) => {
 
-    
-    const results = await VehicleType.find({});
-    console.log(results);
-
+    try{
+        const { name } = req.body  
+        const vehicleType = await VehicleType.create({ name });
+        return res.status(201).json({
+            success : true,
+            results : vehicleType
+        })
+    }catch(err){
+        return res.status(400).json({
+            success : false,
+            error: err.message
+        })
+    }
 }
 
 
 
-export { getVehicleType }
+export { getAllVehicleType , addVehicleType}

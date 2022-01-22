@@ -7,9 +7,7 @@ const login = (req, res) => {
         password
     } = req.body;
 
-    User.findOne({
-        email
-    }, (err, result) => {
+    User.findOne({email}, (err, result) => {
         if (err || !result) {
             return res.status(400).json({
                 isLogged: false,
