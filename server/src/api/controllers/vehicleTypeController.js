@@ -1,18 +1,17 @@
 import VehicleType from "../models/VehicleType.js";
-import User from "../models/User.js";
 
 const getAllVehicleType = async (req, res) => {
 
     try {
         const docs = await VehicleType.find({name:"car"});
         return res.status(200).json({
-            success : true,
-            results : docs
+            status : true,
+            message : docs
         })
     }catch(err){
         return res.status(400).json({
-            success : false,
-            error: err.message
+            status : false,
+            message: err.message
         })
     }
     
@@ -24,34 +23,38 @@ const addVehicleType = async (req, res) => {
         const { name } = req.body  
         const vehicleType = await VehicleType.create({ name });
         return res.status(201).json({
-            success : true,
-            results : vehicleType
+            status : true,
+            message : vehicleType
         })
     }catch(err){
         return res.status(400).json({
-            success : false,
-            error: err.message
+            status : false,
+            message: err.message
         })
     }
 }
 
 const deleteVehicleType = async (req, res) => {
-    console.log(params.id);
-    try{
-        const { id } = req.params  
-        const vehicleType = await VehicleType.create({ name });
-        return res.status(201).json({
-            success : true,
-            results : vehicleType
+    console.log(req.params);
+
+    try {
+        const {
+           id,
+        } = req.params
+  
+        await VehicleType.findOneAndRemove({ _id: id })
+        res.status(200).json({
+           status: true,
+           message: "deleted successfully"
         })
-    }catch(err){
-        return res.status(400).json({
-            success : false,
-            error: err.message
+     } catch (e) {
+        res.status(400).json({
+           status: false,
+           message: e.message
         })
-    }
+     }
 }
 
 
 
-export { getAllVehicleType , addVehicleType}
+export { getAllVehicleType , addVehicleType, deleteVehicleType}
