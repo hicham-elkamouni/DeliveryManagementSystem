@@ -1,7 +1,7 @@
 import express from "express";
 const router = express.Router();
 
-import { loginAdmin, logout, createManager, getVehicleType ,getAllVehicleType, addVehicleType, deleteVehicleType } from "../controllers";
+import { loginAdmin, logout, createManager, getVehicleType ,getAllVehicleType, addVehicleType, deleteVehicleType, updateVehicleType } from "../controllers";
 
 import { CreatUserValidator, Auth } from "../middlewares";
 
@@ -14,6 +14,6 @@ router.get("/getAllVehicleType", getAllVehicleType);
 router.post("/addVehicleType", addVehicleType);
 router.get("/getVehicleType/:id", getVehicleType);
 router.delete("/deleteVehicleType/:id", deleteVehicleType);
-// router.patch("/updateVehicleType/:id", updateVehicleType);
+router.put("/updateVehicleType/:id", updateVehicleType);
 
 export { router };

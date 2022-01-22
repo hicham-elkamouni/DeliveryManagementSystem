@@ -74,17 +74,15 @@ const deleteVehicleType = async (req, res) => {
 }
 
 const updateVehicleType = async (req, res) => {
-    console.log(req.params);
 
     try {
-        const {
-           id,
-        } = req.params
-  
-        await VehicleType.findOneAndRemove({ _id: id })
+        const { id } = req.params;
+        const { name } = req.body;
+        await VehicleType.findOneAndUpdate({id}, {name});
+
         res.status(200).json({
            status: true,
-           message: "deleted successfully"
+           message: "updated successfully"
         })
      } catch (e) {
         res.status(400).json({
@@ -96,4 +94,4 @@ const updateVehicleType = async (req, res) => {
 
 
 
-export { getVehicleType ,getAllVehicleType , addVehicleType, deleteVehicleType}
+export { getVehicleType ,getAllVehicleType , addVehicleType, deleteVehicleType, updateVehicleType}

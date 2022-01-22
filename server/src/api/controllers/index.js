@@ -4,4 +4,4 @@ export { createManager } from "./managerController";
 
 export { login, logout } from "./authenticationController";
 
-export { getVehicleType, getAllVehicleType, addVehicleType, deleteVehicleType } from "./vehicleTypeController";
+export { getVehicleType, getAllVehicleType, addVehicleType, deleteVehicleType, updateVehicleType } from "./vehicleTypeController";
