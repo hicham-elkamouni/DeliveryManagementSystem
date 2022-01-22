@@ -1,9 +1,27 @@
 import VehicleType from "../models/VehicleType.js";
 
+const getVehicleType = async (req, res) => {
+
+    const { id } = req.params
+    try {
+        const doc = await VehicleType.find({_id : id});
+        return res.status(200).json({
+            status : true,
+            message : doc
+        })
+    }catch(err){
+        return res.status(400).json({
+            status : false,
+            message: err.message
+        })
+    }
+    
+}
+
 const getAllVehicleType = async (req, res) => {
 
     try {
-        const docs = await VehicleType.find({name:"car"});
+        const docs = await VehicleType.find();
         return res.status(200).json({
             status : true,
             message : docs
@@ -55,6 +73,27 @@ const deleteVehicleType = async (req, res) => {
      }
 }
 
+const updateVehicleType = async (req, res) => {
+    console.log(req.params);
+
+    try {
+        const {
+           id,
+        } = req.params
+  
+        await VehicleType.findOneAndRemove({ _id: id })
+        res.status(200).json({
+           status: true,
+           message: "deleted successfully"
+        })
+     } catch (e) {
+        res.status(400).json({
+           status: false,
+           message: e.message
+        })
+     }
+}
 
 
-export { getAllVehicleType , addVehicleType, deleteVehicleType}
+
+export { getVehicleType ,getAllVehicleType , addVehicleType, deleteVehicleType}
