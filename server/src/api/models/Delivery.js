@@ -14,7 +14,7 @@ const deliverySchema = new mongoose.Schema({
     type: String,
     trim: true,
     enum: {
-      values: ['Europe', 'America', 'Asia', 'Australia'],
+      values: ['local','Europe', 'America', 'Asia', 'Australia'],
       message: 'is not supported'
     },
   },
