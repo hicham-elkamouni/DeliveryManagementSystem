@@ -16,7 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use("/api/admin", adminRouter);
-// app.use("/api/admin", adminRouter);
+app.use("/api/manager", managerRouter);
 
 app.listen(port, () => {
   console.log(`Running on http://${host}:${port}`);
