@@ -7,7 +7,9 @@ const loginAdmin = (req, res) => {
         password
     } = req.body;
 
-    Admin.findOne({email}, (err, admin) => {
+    Admin.findOne({
+        email
+    }, (err, admin) => {
         if (err || !admin) {
             return res.status(400).json({
                 isLogged: false,
@@ -29,7 +31,7 @@ const loginAdmin = (req, res) => {
             ? res.status(200).json({ isLogged: true, token })
             : res.status(500).json({ isLogged: false, error: "cant create token" });
     })
-    
+
 
 }
 
