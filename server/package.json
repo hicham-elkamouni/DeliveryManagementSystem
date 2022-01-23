@@ -13,9 +13,10 @@
     "nodemon": "^2.0.15"
   },
   "dependencies": {
+    "axios": "^0.25.0",
+    "cookie-parser": "^1.4.6",
     "dotenv": "^14.1.1",
     "express": "^4.17.2",
-    "cookie-parser": "^1.4.6",
     "express-validator": "5",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.1.7",

@@ -1,4 +1,4 @@
-export { loginAdmin } from "./adminController";
+export { loginAdmin , signup } from "./adminController";
 
 export { createManager } from "./managerController";
 

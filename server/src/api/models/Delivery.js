@@ -44,7 +44,7 @@ const deliverySchema = new mongoose.Schema({
     min: 0
   },
   status: {
-    type: Number,
+    type: String,
     required: true,
     default: "waitlist",
     enum: {

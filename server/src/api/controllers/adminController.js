@@ -1,6 +1,18 @@
 import Admin from "../models/Admin.js"
 import { createToken } from "../helpers";
 
+const signup = (req, res) => {
+
+    const admin = new Admin(req.body);
+    admin.save((err, admin) => {
+        if (err) {
+            return res.status(400).send(err)
+        }
+        res.send(admin)
+    })
+
+}
+
 const loginAdmin = (req, res) => {
     const {
         email,
@@ -36,6 +48,4 @@ const loginAdmin = (req, res) => {
 }
 
 
-export {
-    loginAdmin
-}
+export { loginAdmin , signup }
