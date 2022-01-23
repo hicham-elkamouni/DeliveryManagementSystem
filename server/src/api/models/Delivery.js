@@ -6,7 +6,7 @@ const deliverySchema = new mongoose.Schema({
     trim: true,
     required: true,
     enum: {
-      values: ['National', 'International', 'America', 'Asia', 'Australia'],
+      values: ['National', 'International'],
       message: 'is not supported'
     }
   },
@@ -14,7 +14,7 @@ const deliverySchema = new mongoose.Schema({
     type: String,
     trim: true,
     enum: {
-      values: ['Local', 'Europe', 'America', 'Asia', 'Australia'],
+      values: ['Europe', 'America', 'Asia', 'Australia'],
       message: 'is not supported'
     },
     default : null
@@ -37,7 +37,7 @@ const deliverySchema = new mongoose.Schema({
   distance: {
     type: Number,
     required: true,
-    min: 0
+    min: 0u 
   },
   price: {
     type: Number,
@@ -45,11 +45,11 @@ const deliverySchema = new mongoose.Schema({
     min: 0
   },
   status: {
-    type: Number,
+    type: String,
     required: true,
     default: "waitlist",
     enum: {
-      values: ['waitlist', 'assined', 'accepted', 'received'],
+      values: ['waitlist', 'assigned', 'accepted', 'received'],
       message: 'is not supported'
     }
   },
