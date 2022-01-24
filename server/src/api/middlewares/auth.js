@@ -1,3 +1,4 @@
+"use strict";
 import { verifyToken } from "../helpers";
 
 const Auth = (role = "") =>
@@ -11,7 +12,7 @@ const Auth = (role = "") =>
         if (!payload) {
             return res.status(401).json({ error: "unauthenticated" });
         }
-        req.body.idSubAdmin = payload.subAdmin?.id;
+        req.body.created = payload.id;
         req.idCategory = payload.manager?.idCategory;
         next();
     };

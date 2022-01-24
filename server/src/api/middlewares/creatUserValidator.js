@@ -1,3 +1,4 @@
+"use strict";
 
 const CreatUserValidator = (req, res, next) => {
     req.check('username', 'Username is Required !')

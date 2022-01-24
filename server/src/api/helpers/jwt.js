@@ -1,3 +1,4 @@
+"use strict"
 import jwt from "jsonwebtoken";
 // generate tokens :
 export const createToken = (payload = null, role = null) => {

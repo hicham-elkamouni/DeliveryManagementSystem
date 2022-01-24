@@ -1,3 +1,4 @@
+"use strict"
 import VehicleType from "../models/VehicleType.js";
 
 const getVehicleType = async (req, res) => {
