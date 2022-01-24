@@ -6,4 +6,4 @@ export { login, logout } from "./authenticationController";
 
 export { getVehicleType, getAllVehicleType, addVehicleType, deleteVehicleType, updateVehicleType } from "./vehicleTypeController";
 
-export { addDelivery } from "./deliveryController";
+export { createDelivery , deleteDelivery } from "./deliveryController";

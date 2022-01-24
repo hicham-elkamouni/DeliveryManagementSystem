@@ -66,6 +66,7 @@ const removeDeliveryManager = async (req, res) => {
         })
     }
 }
+
 const getAllDeliveryManagers = async (req, res) => {
     try {
         const docs = await DeliveryManager.find().populate("user")

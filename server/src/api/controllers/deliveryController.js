@@ -2,7 +2,7 @@
 import Delivery from "../models/Delivery.js";
 import { getDistance } from "../helpers/";
 
-const addDelivery = async (req, res) => {
+const createDelivery = async (req, res) => {
 
     let deliveryDetails = req.body;
 
@@ -68,6 +68,26 @@ const addDelivery = async (req, res) => {
     }
 };
 
-export {
-    addDelivery
+const deleteDelivery = async (req, res) => {
+    // DELETE ONLY IF IN WAITLIST
+
+    console.log(req.params);
+
+    try {
+        const { id } = req.params
+
+        await Delivery.findOneAndRemove(({ _id: id },{ status : "waitlist" } ))
+        res.status(200).json({
+            status: true,
+            message: "deleted successfully"
+        })
+    } catch (e) {
+        res.status(400).json({
+            status: false,
+            message: e.message
+        })
+    }
+    
 };
+
+export { createDelivery , deleteDelivery };

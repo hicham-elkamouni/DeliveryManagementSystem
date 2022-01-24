@@ -18,7 +18,4 @@ router.get("/getVehicleType/:id", getVehicleType);
 router.delete("/deleteVehicleType/:id", deleteVehicleType);
 router.put("/updateVehicleType/:id", updateVehicleType);
 
-// DELIVERY
-router.post("/addDelivery", addDelivery);
-
 export { router };
