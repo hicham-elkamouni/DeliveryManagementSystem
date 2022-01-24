@@ -1,26 +1,25 @@
 import User from "../models/User.js"
-import DeliveryManager from "../models/DeliveryManager"
+import Driver from "../models/Driver.js"
 
-
-const createDeliveryManager = async (req, res) => {
+const createDriver = async (req, res) => {
 
     const { username, email, password } = req.body
 
     try {
         const userData = {
-            role: "DELIVERY_MANAGER",
+            role: "DRIVER",
             email: email,
             password: password
         }
         const user = new User(userData);
         await user.save()
         // 
-        const deliveryManagerData = {
+        const driverData = {
             username: username,
-            user: user._id
+            user: user._id,
         }
-        const deliveryManager = new DeliveryManager(deliveryManagerData);
-        await deliveryManager.save()
+        const driver = new Driver(driverData);
+        await driver.save()
         // Send email
         CreateUsermail(
             user.email,
@@ -29,10 +28,9 @@ const createDeliveryManager = async (req, res) => {
         );
         res.status(201).json({
             status: true,
-            message: { user, deliveryManager }
+            message: { user, driver }
         })
     } catch (e) {
-        console.log(e.message)
         res.status(400).json({
             status: false,
             message: e.message
@@ -40,10 +38,11 @@ const createDeliveryManager = async (req, res) => {
     }
 }
 
-const removeDeliveryManager = async (req, res) => {
+
+const removeDriver = async (req, res) => {
     try {
         const { id } = req.params
-        const doc = await DeliveryManager.findById({ _id: id })//find the Driver
+        const doc = await Driver.findById({ _id: id })//find the Driver
         // check if exists
         if (doc) {
             // delete
@@ -65,9 +64,10 @@ const removeDeliveryManager = async (req, res) => {
         })
     }
 }
-const getAllDeliveryManagers = async (req, res) => {
+
+const getAllDrivers = async (req, res) => {
     try {
-        const docs = await DeliveryManager.find().populate("user")
+        const docs = await Driver.find().populate("user")
         res.status(200).json({
             status: true,
             message: docs
@@ -80,10 +80,10 @@ const getAllDeliveryManagers = async (req, res) => {
     }
 }
 
-const getDeliveryManager = async (req, res) => {
+const getDriver = async (req, res) => {
     const id = req.params.id
     try {
-        const docs = await DeliveryManager.findById({ _id: id }).populate("user")
+        const docs = await Driver.findById({ _id: id }).populate("user")
         res.status(200).json({
             status: true,
             message: docs
@@ -96,15 +96,15 @@ const getDeliveryManager = async (req, res) => {
     }
 }
 
-const UpdateDeliveryManager = async (req, res) => {
+const UpdateDriver = async (req, res) => {
     try {
         var id = req.params.id
         if (req.body.username) {
             const filter = { _id: id }
-            await DeliveryManager.findOneAndUpdate(filter, req.body);
+            await Driver.findOneAndUpdate(filter, req.body);
         }
         if (req.body.email || req.body.password) {
-            const doc = await DeliveryManager.findById(id)
+            const doc = await Driver.findById(id)
             const filter = { _id: doc.user }
             await User.findOneAndUpdate(filter, req.body)
         }
@@ -120,10 +120,11 @@ const UpdateDeliveryManager = async (req, res) => {
     }
 }
 
+
 export {
-    createDeliveryManager,
-    removeDeliveryManager,
-    getAllDeliveryManagers,
-    getDeliveryManager,
-    UpdateDeliveryManager
+    createDriver,
+    removeDriver,
+    getAllDrivers,
+    getDriver,
+    UpdateDriver
 }
