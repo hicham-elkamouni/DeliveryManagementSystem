@@ -78,7 +78,7 @@ const updateVehicleType = async (req, res) => {
     try {
         const { id } = req.params;
         const { name } = req.body;
-        await VehicleType.findOneAndUpdate({id}, {name});
+        await VehicleType.findOneAndUpdate({_id : id}, {name});
 
         res.status(200).json({
            status: true,
@@ -91,7 +91,5 @@ const updateVehicleType = async (req, res) => {
         })
      }
 }
-
-
 
 export { getVehicleType ,getAllVehicleType , addVehicleType, deleteVehicleType, updateVehicleType}
