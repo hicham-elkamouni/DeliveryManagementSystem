@@ -1,9 +1,13 @@
-export { loginAdmin , signup } from "./adminController";
-
-export { createManager } from "./managerController";
+export { loginAdmin } from "./adminController";
 
 export { login, logout } from "./authenticationController";
 
-export { getVehicleType, getAllVehicleType, addVehicleType, deleteVehicleType, updateVehicleType } from "./vehicleTypeController";
+export { getVehicleType, getAllVehicleType, addVehicleType, removeVehicleType, updateVehicleType } from "./vehicleTypeController";
 
-export { createDelivery , deleteDelivery } from "./deliveryController";
+export { createDeliveryManager, removeDeliveryManager, getAllDeliveryManagers, getDeliveryManager, updateDeliveryManager } from "./deliveryManagerController";
+
+export { createManager, removeManager, getAllManagers, getManager, updateManager } from "./managerController";
+
+export { createDriver, removeDriver, getAllDrivers, getDriver, updateDriver } from "./driverController";
+
+export { createDelivery , removeDelivery } from "./deliveryController";

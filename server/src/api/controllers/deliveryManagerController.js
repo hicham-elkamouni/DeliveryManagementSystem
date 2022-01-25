@@ -98,7 +98,7 @@ const getDeliveryManager = async (req, res) => {
     }
 }
 
-const UpdateDeliveryManager = async (req, res) => {
+const updateDeliveryManager = async (req, res) => {
     try {
         var id = req.params.id
         if (req.body.username) {
@@ -127,5 +127,5 @@ export {
     removeDeliveryManager,
     getAllDeliveryManagers,
     getDeliveryManager,
-    UpdateDeliveryManager
+    updateDeliveryManager
 }

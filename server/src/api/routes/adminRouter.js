@@ -1,21 +1,25 @@
 import express from "express";
 const router = express.Router();
 
-import { signup ,loginAdmin, logout, createManager, getVehicleType ,getAllVehicleType, addVehicleType, deleteVehicleType, updateVehicleType, addDelivery } from "../controllers";
+import { loginAdmin, logout, createManager, removeManager, getAllManagers, getManager, updateManager, getVehicleType ,getAllVehicleType, addVehicleType, removeVehicleType, updateVehicleType } from "../controllers";
 
 import { CreatUserValidator, Auth } from "../middlewares";
 
-
-router.post("/signup", signup);
 router.post("/login", loginAdmin);
 router.get("/logout", logout);
-router.post("/createManager", Auth("ADMIN"), CreatUserValidator, createManager);
+
+// MANAGER
+router.get("/createManager", Auth("ADMIN"), CreatUserValidator, createManager);
+router.get("/removeManager", Auth("ADMIN"), CreatUserValidator, removeManager);
+router.post("/getAllManagers", Auth("ADMIN"), CreatUserValidator, getAllManagers);
+router.delete("/getManager", Auth("ADMIN"), CreatUserValidator, getManager);
+router.put("/updateManager", Auth("ADMIN"), CreatUserValidator, updateManager);
 
 // VEHICLE TYPE 
+router.get("/getVehicleType/:id", getVehicleType);
 router.get("/getAllVehicleType", getAllVehicleType);
 router.post("/addVehicleType", addVehicleType);
-router.get("/getVehicleType/:id", getVehicleType);
-router.delete("/deleteVehicleType/:id", deleteVehicleType);
+router.delete("/removeVehicleType/:id", removeVehicleType);
 router.put("/updateVehicleType/:id", updateVehicleType);
 
 export { router };

@@ -97,7 +97,7 @@ const getDriver = async (req, res) => {
     }
 }
 
-const UpdateDriver = async (req, res) => {
+const updateDriver = async (req, res) => {
     try {
         var id = req.params.id
         if (req.body.username) {
@@ -127,5 +127,5 @@ export {
     removeDriver,
     getAllDrivers,
     getDriver,
-    UpdateDriver
+    updateDriver
 }

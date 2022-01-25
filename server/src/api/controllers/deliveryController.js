@@ -68,7 +68,7 @@ const createDelivery = async (req, res) => {
     }
 };
 
-const deleteDelivery = async (req, res) => {
+const removeDelivery = async (req, res) => {
     // DELETE ONLY IF IN WAITLIST
 
     console.log(req.params);
@@ -76,7 +76,7 @@ const deleteDelivery = async (req, res) => {
     try {
         const { id } = req.params
 
-        await Delivery.findOneAndRemove(({ _id: id },{ status : "waitlist" } ))
+        await Delivery.findOneAndRemove(({ _id: id },{ status : "WaitList" } ))
         res.status(200).json({
             status: true,
             message: "deleted successfully"
@@ -90,4 +90,4 @@ const deleteDelivery = async (req, res) => {
     
 };
 
-export { createDelivery , deleteDelivery };
+export { createDelivery , removeDelivery };

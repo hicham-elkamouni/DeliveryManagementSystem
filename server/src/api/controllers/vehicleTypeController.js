@@ -53,25 +53,23 @@ const addVehicleType = async (req, res) => {
     }
 }
 
-const deleteVehicleType = async (req, res) => {
+const removeVehicleType = async (req, res) => {
     console.log(req.params);
 
     try {
-        const {
-           id,
-        } = req.params
-  
+        const { id, } = req.params
+
         await VehicleType.findOneAndRemove({ _id: id })
         res.status(200).json({
-           status: true,
-           message: "deleted successfully"
+            status: true,
+            message: "deleted successfully"
         })
-     } catch (e) {
+    } catch (e) {
         res.status(400).json({
-           status: false,
-           message: e.message
+            status: false,
+            message: e.message
         })
-     }
+    }
 }
 
 const updateVehicleType = async (req, res) => {
@@ -82,15 +80,15 @@ const updateVehicleType = async (req, res) => {
         await VehicleType.findOneAndUpdate({_id : id}, {name});
 
         res.status(200).json({
-           status: true,
-           message: "updated successfully"
+            status: true,
+            message: "updated successfully"
         })
-     } catch (e) {
+    } catch (e) {
         res.status(400).json({
-           status: false,
-           message: e.message
+            status: false,
+            message: e.message
         })
-     }
+    }
 }
 
-export { getVehicleType ,getAllVehicleType , addVehicleType, deleteVehicleType, updateVehicleType}
+export { getVehicleType, getAllVehicleType, addVehicleType, removeVehicleType, updateVehicleType }
