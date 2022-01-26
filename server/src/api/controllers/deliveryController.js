@@ -69,25 +69,62 @@ const createDelivery = async (req, res) => {
 };
 
 const removeDelivery = async (req, res) => {
-    // DELETE ONLY IF IN WAITLIST
-
-    console.log(req.params);
-
+    // DELETE ONLY IF IN WaitList
     try {
         const { id } = req.params
+        const doc = await Delivery.findById({ _id: id })
+        if (doc) {
+            // delete
+            if (doc.status == "WaitList") {
 
-        await Delivery.findOneAndRemove(({ _id: id },{ status : "WaitList" } ))
-        res.status(200).json({
-            status: true,
-            message: "deleted successfully"
-        })
+                await doc.remove()
+                res.status(200).json({
+                    status: true,
+                    message: "Deleted successfully"
+                })
+            } else {
+                res.status(404).json({
+                    status: false,
+                    message: "You Can't deleted"
+                })
+            }
+        } else {
+            res.status(404).json({
+                status: false,
+                message: "Not Found"
+            })
+        }
     } catch (e) {
         res.status(400).json({
             status: false,
             message: e.message
         })
     }
-    
 };
 
-export { createDelivery , removeDelivery };
+const getDelivery = async (req, res) => {
+    const id = req.params.id
+    try {
+        const doc = await Delivery.findById({ _id: id })
+        if (doc) {
+
+            res.status(200).json({
+                status: true,
+                message: doc
+            })
+        } else {
+            res.status(200).json({
+                status: false,
+                message: "Not Found"
+            })
+        }
+
+    } catch (err) {
+        res.status(400).json({
+            status: false,
+            message: err.message
+        })
+    }
+}
+
+export { createDelivery , removeDelivery , getDelivery};
