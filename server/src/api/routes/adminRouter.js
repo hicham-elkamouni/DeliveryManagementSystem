@@ -9,10 +9,10 @@ router.post("/login", loginAdmin);
 router.get("/logout", logout);
 
 // MANAGER
-router.get("/createManager", Auth("ADMIN"), CreatUserValidator, createManager);
-router.get("/removeManager", Auth("ADMIN"), CreatUserValidator, removeManager);
-router.post("/getAllManagers", Auth("ADMIN"), CreatUserValidator, getAllManagers);
-router.delete("/getManager", Auth("ADMIN"), CreatUserValidator, getManager);
+router.post("/createManager", Auth("ADMIN"), CreatUserValidator,createManager);
+router.delete("/removeManager", Auth("ADMIN"), CreatUserValidator, removeManager);
+router.get("/getAllManagers", Auth("ADMIN"), CreatUserValidator, getAllManagers);
+router.get("/getManager", Auth("ADMIN"), CreatUserValidator, getManager);
 router.put("/updateManager", Auth("ADMIN"), CreatUserValidator, updateManager);
 
 // VEHICLE TYPE 

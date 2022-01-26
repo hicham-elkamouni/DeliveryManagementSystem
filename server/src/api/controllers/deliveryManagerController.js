@@ -1,18 +1,19 @@
 "use strict";
 import User from "../models/User.js"
 import DeliveryManager from "../models/DeliveryManager"
-
+import { CreateUserMail } from "../helpers";
 
 const createDeliveryManager = async (req, res) => {
 
     const { username, email, password } = req.body
 
+    const userData = {
+        role: "DELIVERY_MANAGER",
+        email: email,
+        password: password
+    }
+
     try {
-        const userData = {
-            role: "DELIVERY_MANAGER",
-            email: email,
-            password: password
-        }
         const user = new User(userData);
         await user.save()
         // 
@@ -23,10 +24,10 @@ const createDeliveryManager = async (req, res) => {
         const deliveryManager = new DeliveryManager(deliveryManagerData);
         await deliveryManager.save()
         // Send email
-        CreateUsermail(
+        CreateUserMail(
             user.email,
             user.password,
-            manager.username
+            deliveryManager.username
         );
         res.status(201).json({
             status: true,
@@ -43,15 +44,16 @@ const createDeliveryManager = async (req, res) => {
 
 const removeDeliveryManager = async (req, res) => {
     try {
-        const { id } = req.params
+        const { id } = await req.params
         const doc = await DeliveryManager.findById({ _id: id })//find the Driver
+        console.log("this is doc : ",doc );
         // check if exists
         if (doc) {
             // delete
             await doc.remove()
             res.status(200).json({
                 status: true,
-                message: "Deleted successfuly"
+                message: "Deleted successfully"
             })
         } else {
             res.status(404).json({
@@ -99,8 +101,9 @@ const getDeliveryManager = async (req, res) => {
 }
 
 const updateDeliveryManager = async (req, res) => {
+    console.log(req.params.id);
     try {
-        var id = req.params.id
+        const id = req.params.id
         if (req.body.username) {
             const filter = { _id: id }
             await DeliveryManager.findOneAndUpdate(filter, req.body);

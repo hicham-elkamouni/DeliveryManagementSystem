@@ -1,53 +1,53 @@
-// const winston = require("winston");
-// require("winston-mongodb");
+const winston = require("winston");
+require("winston-mongodb");
 
-// const levels = {
-//   error: 0,
-//   info: 1,
-// };
+const levels = {
+  error: 0,
+  info: 1,
+};
 
-// const colors = {
-//     error: "red",
-//     info: "green",
-// };
+const colors = {
+    error: "red",
+    info: "green",
+};
 
-// winston.addColors(colors);
+winston.addColors(colors);
 
-// const format = winston.format.combine(
-//     winston.format.timestamp({
-//     format: "YYYY-MM-DD HH:mm:ss:ms",
-//     }),
-//     winston.format.printf(
-//     (info) => `${info.timestamp} ${info.level}: ${info.message}`
-//     )
-// );
+const format = winston.format.combine(
+    winston.format.timestamp({
+    format: "YYYY-MM-DD HH:mm:ss:ms",
+    }),
+    winston.format.printf(
+    (info) => `${info.timestamp} ${info.level}: ${info.message}`
+    )
+);
 
-// const transports = [
-//     new winston.transports.Console({
-//     format: winston.format.combine(winston.format.colorize(), format),
-//     }),
-//     new winston.transports.MongoDB({
-//     db: process.env.mongoURL,
-//     options: {
-//         useUnifiedTopology: true,
-//     },
-//     collection: "loggers_info",
-//     level: "info",
-//     }),
-//     new winston.transports.MongoDB({
-//     db: process.env.mongoURL,
-//     options: {
-//         useUnifiedTopology: true,
-//     },
-//     collection: "loggers_error",
-//     level: "error",
-//     }),
-// ];
+const transports = [
+    new winston.transports.Console({
+    format: winston.format.combine(winston.format.colorize(), format),
+    }),
+    new winston.transports.MongoDB({
+    db: process.env.mongoURL,
+    options: {
+        useUnifiedTopology: true,
+    },
+    collection: "loggers_info",
+    level: "info",
+    }),
+    new winston.transports.MongoDB({
+    db: process.env.mongoURL,
+    options: {
+        useUnifiedTopology: true,
+    },
+    collection: "loggers_error",
+    level: "error",
+    }),
+];
 
-// const logger = winston.createLogger({
-//     levels,
-//     format,
-//     transports,
-// });
+const logger = winston.createLogger({
+    levels,
+    format,
+    transports,
+});
 
-// module.exports = logger;
+module.exports = logger;
