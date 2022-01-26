@@ -1,7 +1,7 @@
 import express from "express";
 const router = express.Router();
 
-import { logout, login, createDelivery, removeDelivery } from "../controllers";
+import { logout, login, createDelivery, removeDelivery , getDelivery} from "../controllers";
 
 import { CreatUserValidator, Auth } from "../middlewares";
 
@@ -13,7 +13,9 @@ router.get("/logout", logout);
 
 // DELIVERY
 router.post("/createDelivery", createDelivery);
-router.delete("/removeDelivery", removeDelivery);
+router.get("/getDelivery/:id", getDelivery);
+router.delete("/removeDelivery/:id", removeDelivery);
+router.delete("/removeDelivery/:id", removeDelivery);
 
 
 export { router };
@@ -21,8 +23,8 @@ export { router };
 
 
 // GETTING ONE DELIVERY
-// GETTING ALL DELIVERIES
 // ADDING DELIVERY
+// GETTING ALL DELIVERIES
 // REMOVING DELIVERY
 // REMOVING ALL DELIVERY
 // UPDATING DELIVERY

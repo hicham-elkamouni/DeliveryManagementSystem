@@ -104,6 +104,7 @@ const removeDelivery = async (req, res) => {
 
 const getDelivery = async (req, res) => {
     const id = req.params.id
+    console.log(id);
     try {
         const doc = await Delivery.findById({ _id: id })
         if (doc) {
