@@ -10,4 +10,4 @@ export { createManager, removeManager, getAllManagers, getManager, updateManager
 
 export { createDriver, removeDriver, getAllDrivers, getDriver, updateDriver } from "./driverController";
 
-export { createDelivery , removeDelivery , getDelivery } from "./deliveryController";
+export { createDelivery , removeDelivery , getDelivery, getAllDeliveries } from "./deliveryController";

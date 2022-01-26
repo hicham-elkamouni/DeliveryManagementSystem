@@ -128,4 +128,29 @@ const getDelivery = async (req, res) => {
     }
 }
 
-export { createDelivery , removeDelivery , getDelivery};
+const getAllDeliveries = async (req, res) => {
+
+    try {
+        const docs = await Delivery.find()
+        if (docs) {
+
+            res.status(200).json({
+                status: true,
+                message: docs
+            })
+        } else {
+            res.status(200).json({
+                status: false,
+                message: "Not Found"
+            })
+        }
+
+    } catch (err) {
+        res.status(400).json({
+            status: false,
+            message: err.message
+        })
+    }
+}
+
+export { createDelivery , removeDelivery , getDelivery, getAllDeliveries};
