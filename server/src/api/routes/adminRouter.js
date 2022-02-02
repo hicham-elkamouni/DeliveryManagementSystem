@@ -11,7 +11,7 @@ router.get("/logout", logout);
 // MANAGER
 router.post("/createManager", Auth("ADMIN"), CreatUserValidator,createManager);
 router.delete("/removeManager", Auth("ADMIN"), CreatUserValidator, removeManager);
-router.get("/getAllManagers", Auth("ADMIN"), CreatUserValidator, getAllManagers);
+router.get("/getAllManagers", getAllManagers);
 router.get("/getManager", Auth("ADMIN"), CreatUserValidator, getManager);
 router.put("/updateManager", Auth("ADMIN"), CreatUserValidator, updateManager);
 
