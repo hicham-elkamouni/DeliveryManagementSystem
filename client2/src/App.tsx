@@ -1,25 +1,48 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { Routes, Route } from "react-router-dom";
+import { FC } from "react";
+import Login from "./pages/Login"
+import Dashboard from "./pages/Dashboard"
+import ReadManagers from './components/manageManagers/ReadManagers';
+import CreateManager from './components/manageManagers/CreateManager';
 
-function App() {
+const App: FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Routes>
+
+      <Route path="/" >
+
+        <Route index element={<Login />} />
+        <Route path=":acteur" element={<Login />} />
+
+        <Route path="dashboard" element={<Dashboard />} >
+          {/*  */}
+          <Route path="admin"  >
+            <Route path="manageManagers"  >
+              <Route path="read" element={<ReadManagers />} />
+              <Route path="create" element={<CreateManager />} />
+            </Route>
+          </Route>
+          {/*  */}
+          <Route path="manager">
+
+          </Route>
+          {/*  */}
+          <Route path="deliveryManager">
+
+          </Route>
+          {/*  */}
+          <Route path="driver">
+
+          </Route>
+        </Route>
+
+
+      </Route>
+
+    </Routes >
+
+
   );
 }
 
