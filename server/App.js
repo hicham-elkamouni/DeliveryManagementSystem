@@ -3,6 +3,7 @@ import expressvalidator from "express-validator";
 import cookieParser from "cookie-parser";
 require("dotenv").config();
 import connectDB from "./src/config/db";
+import cors from "cors";
 import { adminRouter, managerRouter , deliveryManagerRouter, driverRouter } from "./src/api/routes";
 
 const host = process.env.host;
@@ -10,6 +11,7 @@ const port = process.env.port;
 
 const app = express();
 
+app.use(cors())
 app.use(express.json());
 app.use(expressvalidator());
 app.use(express.urlencoded({ extended: true }));
