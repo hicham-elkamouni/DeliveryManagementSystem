@@ -1,4 +1,4 @@
-import {FC} from 'react';
+import {FC, useEffect, useState} from 'react';
 import Table from '../../layouts/Table'
 import useFetch from '../../Services/Utils/useFetch'
 
@@ -13,17 +13,20 @@ interface DataManager {
 }
 
 const ReadManagers:FC = () => {
+  
+  const [ data , setData ] = useState<Manager[]>([]);
 
-  const { data, error , isPending } = useFetch("http://localhost:3000/api/admin/getAllManagers");
+  const { error , isPending } = useFetch("http://localhost:3000/api/admin/getAllManagers", setData);
 
-  if (!isPending){
-    console.log("this is data :", data as DataManager)
-  }
-
-  console.log("this is error :",error)
-
-  return <div>readmanagers
-          {/* <Table data={data}/> */}
+  useEffect(() => {
+    console.log("this is data :", data)
+  },[data])
+  
+  return <div>
+    <h1> readmanagers </h1>
+      
+      <Table data={data}/>
+    
         </div>;
 };
 

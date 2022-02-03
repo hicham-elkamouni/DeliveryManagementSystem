@@ -1,20 +1,9 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-interface Manager {
-  email: string,
-  role : string,
-  username : string
-}
 
-interface DataManager {
-  data : Manager[]
-}
+const useFetch = (url : string, setData:Function) => {
 
-
-const useFetch = (url : string) => {
-
-    const [data, setData] = useState([] as unknown  as DataManager)
     const [isPending, setIsPending] = useState(true)
     const [error, setError] = useState(null)
 
@@ -32,7 +21,7 @@ const useFetch = (url : string) => {
     
     },[url])
 
-    return { data , error , isPending }
+    return { error , isPending }
     
 };
 
