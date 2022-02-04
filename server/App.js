@@ -4,7 +4,7 @@ import cookieParser from "cookie-parser";
 require("dotenv").config();
 import connectDB from "./src/config/db";
 import cors from "cors";
-import { adminRouter, managerRouter , deliveryManagerRouter, driverRouter } from "./src/api/routes";
+import { adminRouter, managerRouter , deliveryManagerRouter, driverRouter , authRouter} from "./src/api/routes";
 
 const host = process.env.host;
 const port = process.env.port;
@@ -17,6 +17,7 @@ app.use(expressvalidator());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+app.use("/api/auth", authRouter);
 app.use("/api/admin", adminRouter);
 app.use("/api/manager", managerRouter);
 app.use("/api/deliveryManager", deliveryManagerRouter);
