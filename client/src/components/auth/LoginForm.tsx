@@ -52,11 +52,11 @@ const LoginForm: React.FC = () => {
             email: Yup.string().email('Invalid email address').required('Required')
         }),
         enableReinitialize: true,
-        onSubmit: (values: any) => {
+        onSubmit: async (values: any) => {
             //actor from param
             values.role = actor
-
-            login(values).then((res) => {
+            console.log(values);
+            await login(values).then((res) => {
                 const role = res?.data?.doc?.role
                 if (!role) {
                     // isAdmin

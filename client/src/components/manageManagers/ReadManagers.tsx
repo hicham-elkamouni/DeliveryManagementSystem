@@ -37,3 +37,6 @@ const ReadManagers: FC = () => {
     </div>
   </div>;
 };
+
+
+export default ReadManagers;

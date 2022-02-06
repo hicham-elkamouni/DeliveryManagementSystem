@@ -13,7 +13,7 @@ const App: FC = () => {
       <Route path="/" >
 
         <Route index element={<Login />} />
-        <Route path=":acteur" element={<Login />} />
+        <Route path=":actor" element={<Login />} />
 
         <Route path="dashboard" element={<Dashboard />} >
           {/*  */}
