@@ -64,9 +64,18 @@ const removeManager = async (req, res) => {
 const getAllManagers = async (req, res) => {
   try {
     const docs = await Manager.find().populate("user");
+    const data = await docs.map((e) => {
+      return {
+        _id: e._id,
+        username: e.username,
+        email: e.user?.email,
+        createdAt: e.createdAt,
+        updatedAt: e.updatedAt,
+      };
+    });
     res.status(200).json({
       status: true,
-      message: docs,
+      message: data,
     });
   } catch (err) {
     res.status(400).json({
