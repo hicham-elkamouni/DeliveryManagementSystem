@@ -17,25 +17,25 @@ const App: FC = () => {
 
         <Route path="dashboard" element={<Dashboard />} >
           {/*  */}
-          <Route path="admin"  >
-            <Route path="manageManagers"  >
-              <Route path="read" element={<ReadManagers />} />
-              <Route path="create" element={<CreateManager />} />
-            </Route>
-          </Route>
-          {/*  */}
-          <Route path="manager">
-
-          </Route>
-          {/*  */}
-          <Route path="deliveryManager">
-
-          </Route>
-          {/*  */}
-          <Route path="driver">
-
+        <Route path="admin"  >
+          <Route path="manageManagers"  >
+            <Route path="read" element={<ReadManagers />} />
+            <Route path="create" element={<CreateManager />} />
           </Route>
         </Route>
+        {/*  */}
+        <Route path="manager">
+
+        </Route>
+        {/*  */}
+        <Route path="deliveryManager">
+
+        </Route>
+        {/*  */}
+        <Route path="driver">
+
+        </Route>
+      </Route>
 
 
       </Route>

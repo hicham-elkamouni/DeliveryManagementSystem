@@ -1,6 +1,6 @@
 
 import { Outlet } from 'react-router-dom';
-import Sidebar from '../layouts/Sidebar'
+import Sidebar from '../layouts/ItemList'
 import WorkSpace from '../layouts/WorkSpace'
 const Dashboard = () => {
     return <div className="bg-gray-100 font-family-karla flex">

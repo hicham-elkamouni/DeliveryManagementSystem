@@ -1,33 +1,39 @@
-import {FC, useEffect, useState} from 'react';
-import Table from '../../layouts/Table'
+import { Typography } from '@mui/material';
+import { FC, useState, useEffect } from 'react';
+import CreateBtn from '../../layouts/buttons/CreateBtn';
+import TableData from '../../layouts/TableData'
 import useFetch from '../../Services/Utils/useFetch'
-
-interface Manager {
-  email: string,
-  role : string,
-  username : string
+interface Column {
+  id: 'username' | 'email' | 'createdAt' | 'updatedAt';
+  label: string;
 }
 
-interface DataManager {
-  data : Manager[]
-}
+const ReadManagers: FC = () => {
 
-const ReadManagers:FC = () => {
-  
-  const [ data , setData ] = useState<Manager[]>([]);
 
-  const { error , isPending } = useFetch("http://localhost:3000/api/admin/getAllManagers", setData);
+  const [data, setData] = useState([]);
 
-  useEffect(() => {
-    console.log("this is data :", data)
-  },[data])
-  
+  const { error, isPending } = useFetch("http://localhost:3000/api/admin/getAllManagers", setData);
+
+
+  const columns: Column[] = [
+    { id: 'username', label: 'User Name' },
+    { id: 'email', label: 'Email' },
+    { id: 'createdAt', label: 'Created At' },
+    { id: 'updatedAt', label: 'Updated At' },
+  ]
   return <div>
-    <h1> readmanagers </h1>
-      
-      <Table data={data}/>
-    
-        </div>;
-};
+    <div className="mb-6" onClick={() => console.log('e')}>
 
-export default ReadManagers;
+    <CreateBtn/>
+    </div>
+    <Typography variant="h4" gutterBottom component="div">
+      Managers
+    </Typography>
+
+    <div className="mt-6">
+
+      {data && <TableData data={data} columns={columns} />}
+    </div>
+  </div>;
+};

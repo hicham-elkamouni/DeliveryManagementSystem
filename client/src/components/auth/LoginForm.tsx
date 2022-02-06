@@ -7,14 +7,16 @@ import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-// import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useFormik, FormikProps } from "formik"
-import { useState } from 'react';
+import { useFormik } from "formik"
+import { useDispatch, useSelector } from "react-redux"
+import { RootState } from "../../Redux/store";
 import * as Yup from "yup"
-
+import { login } from '../../Services/login';
+import { userData } from '../../Redux/features/auth/userSlice';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 
 function Copyright(props: any) {
@@ -33,47 +35,57 @@ function Copyright(props: any) {
 const theme = createTheme();
 
 const LoginForm: React.FC = () => {
-    interface FormValues {
-        email: string;
-        password: string;
-    }
-    //   const [azaz , serfdfd] = useState<string>()
+    // const role = useLocation().pathname
+    let { actor } = useParams()
+    let navigate = useNavigate();
 
-    // const formik: FormikProps<FormValues> = useFormik<FormValues>({
-    //     initialValues: {
-    //         email: "",
-    //         password: ""
-    //     }
-    // }
 
-    // );
+    let dispatch = useDispatch()
 
-    // const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    //     event.preventDefault();
-    //     const data = new FormData(event.currentTarget);
-    //     // eslint-disable-next-line no-console
-    //     console.log({
-    //         email: data.get('email'),
-    //         password: data.get('password'),
-    //     });
-    // };
     const formik = useFormik({
         initialValues: {
             email: '',
-            Password: '',
+            password: '',
         },
         validationSchema: Yup.object({
-
-            Password: Yup.string().min(5, 'Must be 5 characters or more').required('Required'),
+            password: Yup.string().min(5, 'Must be 5 characters or more').required('Required'),
             email: Yup.string().email('Invalid email address').required('Required')
         }),
         enableReinitialize: true,
         onSubmit: (values: any) => {
-            console.log(values);
+            //actor from param
+            values.role = actor
+
+            login(values).then((res) => {
+                const role = res?.data?.doc?.role
+                if (!role) {
+                    // isAdmin
+                    navigate("../dashboard/admin/manageManagers/read", { replace: true });
+
+                } else if (role == "MANAGER") {
+                    console.log("MANAGER")
+
+                } else if (role == "DELIVERY_MANAGER") {
+                    console.log("DELIVERY_MANAGER")
+
+                } else if (role == "DRIVER") {
+                    console.log("DRIVER")
+
+                }
+                dispatch(userData({
+                    token: res.data.token,
+                    role: role ? role : "ADMIN",
+
+                }))
+            }
+            ).catch((err) => {
+                console.log(err)
+            })
 
 
         }
     }
+
     )
 
     return (
@@ -116,10 +128,10 @@ const LoginForm: React.FC = () => {
                             label="Password"
                             type="password"
                             id="password"
-                            {...formik.getFieldProps('Password')}
+                            {...formik.getFieldProps('password')}
                             autoComplete="current-password"
                         />
-                        {formik.touched.Password && formik.errors.Password ? <div className="text-red-400 ">{formik.errors.Password}</div> : null}
+                        {formik.touched.password && formik.errors.password ? <div className="text-red-400 ">{formik.errors.password}</div> : null}
                         <FormControlLabel
                             control={<Checkbox value="remember" color="primary" />}
                             label="Remember me"
