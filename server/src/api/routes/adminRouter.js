@@ -1,12 +1,14 @@
 import express from "express";
 const router = express.Router();
 
-import { loginAdmin, logout, createManager, removeManager, getAllManagers, getManager, updateManager, getVehicleType ,getAllVehicleType, addVehicleType, removeVehicleType, updateVehicleType } from "../controllers";
+import { loginAdmin, logout, signup, remove, createManager, removeManager, getAllManagers, getManager, updateManager, getVehicleType ,getAllVehicleType, addVehicleType, removeVehicleType, updateVehicleType } from "../controllers";
 
 import { CreatUserValidator, Auth } from "../middlewares";
 
 router.post("/login", loginAdmin);
 router.get("/logout", logout);
+router.post("/signup", signup);
+router.delete("/remove/:id", remove);
 
 // MANAGER
 router.post("/createManager", Auth("ADMIN"), CreatUserValidator,createManager);

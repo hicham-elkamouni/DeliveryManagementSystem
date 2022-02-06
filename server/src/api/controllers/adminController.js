@@ -2,6 +2,43 @@
 import Admin from "../models/Admin.js"
 import { createToken } from "../helpers";
 
+const signup = (req, res) => {
+
+    const admin = new Admin(req.body);
+    admin.save((err, admin) => {
+        if (err) {
+            return res.status(400).send(err)
+        }
+        res.send(admin)
+    })
+}
+
+const remove = async (req, res) => {
+    try {
+        const { id } = await req.params
+        const doc = await Admin.findById({ _id: id })//find the Driver
+        // check if exists
+        if (doc) {
+            // delete
+            await doc.remove()
+            res.status(200).json({
+                status: true,
+                message: "Deleted successfully"
+            })
+        } else {
+            res.status(404).json({
+                status: false,
+                message: "Not Found"
+            })
+        }
+    } catch (e) {
+        res.status(400).json({
+            status: false,
+            message: e.message
+        })
+    }
+}
+
 const loginAdmin = (req, res) => {
     const {
         email,
@@ -38,5 +75,5 @@ const loginAdmin = (req, res) => {
 
 
 export {
-    loginAdmin
+    loginAdmin , signup, remove
 }
