@@ -44,7 +44,7 @@ const LoginForm: React.FC = () => {
 
     const formik = useFormik({
         initialValues: {
-            email: '',
+            email: 'TYUI',
             password: '',
         },
         validationSchema: Yup.object({
@@ -70,7 +70,6 @@ const LoginForm: React.FC = () => {
 
                 } else if (role == "DRIVER") {
                     console.log("DRIVER")
-
                 }
                 dispatch(userData({
                     token: res.data.token,

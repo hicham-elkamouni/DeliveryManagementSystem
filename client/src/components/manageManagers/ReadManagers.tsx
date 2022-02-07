@@ -31,9 +31,8 @@ const ReadManagers: FC = () => {
 
     
     <div className="mb-6" onClick={() => redirect()}>
-      <CreateBtn/>
+    <CreateBtn name="Create"/>
     </div>
-    
     <Typography variant="h4" gutterBottom component="div">
       Managers
     </Typography>

@@ -5,7 +5,7 @@ import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
+
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
@@ -16,29 +16,26 @@ import { RootState } from "../../Redux/store";
 import * as Yup from "yup"
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { FormControl, FormHelperText, Input, InputLabel } from '@mui/material';
+import CreateBtn from '../../layouts/buttons/CreateBtn';
 
 
-function Copyright(props: any) {
-    return (
-        <Typography variant="body2" color="text.secondary" align="center" {...props}>
-            {'Copyright © '}
-            <Link color="inherit" href="https://mui.com/">
-                Maroc Ship
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
+
 
 const theme = createTheme();
 
 const CreateManager: React.FC = () => {
 
+    function redirect(): void {
+        navigate("/dashboard/admin/manageManagers/read", { replace: true });
+      }
+
     let navigate = useNavigate();
 
-
     let dispatch = useDispatch()
+
+    // ! GET TOKEN FROM STORE
+    let token = useSelector((state : RootState)=> state.user.token);
 
     const formik = useFormik({
         initialValues: {
@@ -52,29 +49,35 @@ const CreateManager: React.FC = () => {
             password: Yup.string().min(5, 'Must be 5 characters or more').required('Required'),
         }),
         enableReinitialize: true,
-        onSubmit: async (values: any) => {
-            //actor from param
+        onSubmit: (values: any) => {
             
-            try {
+            
                 const config = {
-                  headers: { Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbiI6eyJfaWQiOiI2MWZmYzc3ZWJjOGM0ZDIyOTIzNDAyYTEiLCJ1c2VybmFtZSI6ImhpY2hhbSIsImVtYWlsIjoiaGljaGFtQGdtYWlsLmNvbSIsImhhc2hlZF9wYXNzd29yZCI6IjllZTZlZjE5N2FiNmM4YzQyY2Y2ZDJlY2U1ODMyMzJiOWNiMmVhMzMiLCJzYWx0IjoiYjMxOWRiNGYtNmY5Yi00YjM3LTlmNGUtMzVkNjA4MDc4ZGM3IiwiY3JlYXRlZEF0IjoiMjAyMi0wMi0wNlQxMzowNTowMi4yNjFaIiwidXBkYXRlZEF0IjoiMjAyMi0wMi0wNlQxMzowNTowMi4yNjFaIiwiX192IjowfSwiaWF0IjoxNjQ0MTkxMTQ3LCJleHAiOjE2NDQxOTQ3NDd9.mwvNG8f1yvnBDTwyNyFovcdlAZaJerHO0HVcE8LQ7lw` }
-                 };
-                  let res = await axios.post("http://localhost:3000/api/admin/createManager", values, config);
-                  console.log(res);
-              }catch (e) {
-                  console.error(e);
-              }
+                    headers: { Authorization: `Bearer ${token}` }
+                };
+                    let res = axios.post("http://localhost:3000/api/admin/createManager", values, config).then(res=>{
+                        navigate("/dashboard/admin/manageManagers/read", { replace: true });        
 
-              navigate("/dashboard/admin/manageManagers/read", { replace: true });        
+                    }).catch((err)=>{
+
+                        console.error(err);
+                    })
+               
+               
+
         }
     }
 
     )
 
     return (
+        
         <ThemeProvider theme={theme}>
+                <div className="mb-6" onClick={() => redirect()}>
+      <CreateBtn name="Back"/>
+    </div>
             <Container component="main" maxWidth="xs">
-                <CssBaseline />
+
                 <Box
                     sx={{
                         marginTop: 8,
@@ -83,12 +86,9 @@ const CreateManager: React.FC = () => {
                         alignItems: 'center',
                     }}
                 >
-                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                        {/* <LockOutlinedIcon /> */}
-                    </Avatar>
-                    <Typography component="h1" variant="h5">
-                        Sign in
-                    </Typography>
+                        <Typography variant="h4" gutterBottom component="div">
+                            Create Manager
+                        </Typography>
                     <Box component="form" onSubmit={formik.handleSubmit} noValidate sx={{ mt: 1 }}>
 
                         <TextField
@@ -97,10 +97,9 @@ const CreateManager: React.FC = () => {
                             fullWidth
                             id="username"
                             label="username"
-
-                            autoComplete="username"
                             {...formik.getFieldProps('username')}
                             autoFocus
+                            autoComplete="off"
                         />
                         {formik.touched.username && formik.errors.username ? <div className="text-red-400 ">{formik.errors.username}</div> : null}
                         <TextField
@@ -109,8 +108,6 @@ const CreateManager: React.FC = () => {
                             fullWidth
                             id="email"
                             label="Email Address"
-
-                            autoComplete="email"
                             {...formik.getFieldProps('email')}
                             autoFocus
                         />
@@ -124,7 +121,7 @@ const CreateManager: React.FC = () => {
                             type="password"
                             id="password"
                             {...formik.getFieldProps('password')}
-                            autoComplete="current-password"
+                            
                         />
                         {formik.touched.password && formik.errors.password ? <div className="text-red-400 ">{formik.errors.password}</div> : null}
                         
@@ -134,11 +131,12 @@ const CreateManager: React.FC = () => {
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
                         >
-                            Create Manager
+                            Submit
                         </Button>
+
                     </Box>
                 </Box>
-                <Copyright sx={{ mt: 8, mb: 4 }} />
+
             </Container>
         </ThemeProvider>
     );
