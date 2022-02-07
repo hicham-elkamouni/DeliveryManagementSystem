@@ -14,9 +14,8 @@ import { useFormik } from "formik"
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "../../Redux/store";
 import * as Yup from "yup"
-import { login } from '../../Services/login';
-import { userData } from '../../Redux/features/auth/userSlice';
 import { useLocation, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 
 function Copyright(props: any) {
@@ -56,9 +55,17 @@ const CreateManager: React.FC = () => {
         onSubmit: async (values: any) => {
             //actor from param
             
-            console.log(values);
-            
+            try {
+                const config = {
+                  headers: { Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbiI6eyJfaWQiOiI2MWZmYzc3ZWJjOGM0ZDIyOTIzNDAyYTEiLCJ1c2VybmFtZSI6ImhpY2hhbSIsImVtYWlsIjoiaGljaGFtQGdtYWlsLmNvbSIsImhhc2hlZF9wYXNzd29yZCI6IjllZTZlZjE5N2FiNmM4YzQyY2Y2ZDJlY2U1ODMyMzJiOWNiMmVhMzMiLCJzYWx0IjoiYjMxOWRiNGYtNmY5Yi00YjM3LTlmNGUtMzVkNjA4MDc4ZGM3IiwiY3JlYXRlZEF0IjoiMjAyMi0wMi0wNlQxMzowNTowMi4yNjFaIiwidXBkYXRlZEF0IjoiMjAyMi0wMi0wNlQxMzowNTowMi4yNjFaIiwiX192IjowfSwiaWF0IjoxNjQ0MTkxMTQ3LCJleHAiOjE2NDQxOTQ3NDd9.mwvNG8f1yvnBDTwyNyFovcdlAZaJerHO0HVcE8LQ7lw` }
+                 };
+                  let res = await axios.post("http://localhost:3000/api/admin/createManager", values, config);
+                  console.log(res);
+              }catch (e) {
+                  console.error(e);
+              }
 
+              navigate("/dashboard/admin/manageManagers/read", { replace: true });        
         }
     }
 
