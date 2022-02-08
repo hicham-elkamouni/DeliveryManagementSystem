@@ -33,11 +33,12 @@ interface data {
 
 interface Props {
   data: data[]
-  columns: Column[]
+  columns: Column[],
+  refetch : any
 }
 
 
-const TableData: React.FC<Props> = ({ data, columns: headers }) => {
+const TableData: React.FC<Props> = ({ data, columns: headers, refetch }) => {
   // columns => table headers
   const columns: readonly Column[] = headers.map(e => e);
   // rows => data
@@ -59,11 +60,13 @@ const TableData: React.FC<Props> = ({ data, columns: headers }) => {
   const [open, setOpen] = useState(false)
   // GET MANAGER ID TO PASS IN DELETE MODAL
   const [managerId , setManagerId] = useState('')
+  const [response , setResponse] = useState('')
   
-  const openDeleteModal = (id:string) =>{
+  const openDeleteModal = async (id:string) =>{
     console.log(id)
     setManagerId(id)
     setOpen(!open)
+    
   }
 
   return (<>
@@ -119,7 +122,7 @@ const TableData: React.FC<Props> = ({ data, columns: headers }) => {
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
     </Paper >
-    {  <DeleteUserDialog setOpen={setOpen} open={open} managerId={managerId} />}
+    {  <DeleteUserDialog setOpen={setOpen} open={open} managerId={managerId} refetch={refetch} />}
     </>
   );
 };

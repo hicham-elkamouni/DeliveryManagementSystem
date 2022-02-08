@@ -8,22 +8,43 @@ import DialogTitle from '@mui/material/DialogTitle';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../Redux/store';
+import { useNavigate } from 'react-router-dom';
+import useFetch from '../../Services/Utils/useFetch';
 interface props {
   setOpen: (val: boolean) => void , 
   open: boolean , 
-  managerId: string
+  managerId: string,
+  // setResponse: ((val: string) => void),
+  refetch : any
 }
 
 
-const AlertDialog: React.FC<props> =  ({setOpen , open , managerId}) => {
+const AlertDialog: React.FC<props> =  ({setOpen , open , managerId , refetch }) => {
 
-    // ! GET TOKEN FROM STORE
-    let token = useSelector((state : RootState)=> state.user.token);
+  let navigate = useNavigate();
+  
+  // ! GET TOKEN FROM STORE
+  let token = useSelector((state : RootState)=> state.user.token);
+
+  const deleteManager = (id : string) => {
+    const config = {
+      headers: { Authorization: `Bearer ${token}` }
+    };
+
+    axios.delete(`http://localhost:3000/api/admin/removeManager/${id}`, config)
+    .then( (res) =>{
+        console.log(res.data)
+    })
+    .catch((err) =>{
+        setError(err)
+    })
+    setOpen(!open)
+    refetch((previous:any)=>previous.filter((user:any)=> user._id !== id))
+  }
     
   return (
     <div>
       <Dialog
-        // onClick={() => setOpen(!open)}
         open={open}
         onClose={() => setOpen(!open)}
         aria-labelledby="alert-dialog-title"
@@ -39,25 +60,7 @@ const AlertDialog: React.FC<props> =  ({setOpen , open , managerId}) => {
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setOpen(!open)}>Disagree</Button>
-          <Button onClick={async() => {
-            // DELETE MANAGER ROUTE
-            
-
-            const config = {
-                headers: { Authorization: `Bearer ${token}` }
-            };
-
-            axios.delete(`http://localhost:3000/api/admin/removeManager/${managerId}`, config)
-            .then( (res) =>{
-                console.log(res.data)
-            })
-            .catch((err) =>{
-                setError(err)
-            })
-            setOpen(!open)
-            }} autoFocus>
-            Agree
-          </Button>
+          <Button onClick={() => deleteManager(managerId)} autoFocus> Agree </Button>
         </DialogActions>
       </Dialog>
     </div>
