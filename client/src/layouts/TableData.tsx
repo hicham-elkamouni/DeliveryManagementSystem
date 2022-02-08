@@ -1,3 +1,5 @@
+
+
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -6,10 +8,16 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import {  useState } from 'react';
+import { useState } from 'react';
+import Button from '@mui/material/Button';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteUserDialog from './dialogs/DeleteUserDialog';
+
+
 
 interface Column {
-  id: 'username' | 'email' | 'createdAt' | 'updatedAt';
+  id: 'username' | 'email' | 'createdAt' | 'updatedAt' | 'actions';
   label: string;
 
 }
@@ -20,6 +28,7 @@ interface data {
   email?: string;
   updatedAt?: string;
   createdAt?: string;
+  actions?: string;
 }
 
 interface Props {
@@ -45,8 +54,19 @@ const TableData: React.FC<Props> = ({ data, columns: headers }) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+  
+  // MODAL STATE
+  const [open, setOpen] = useState(false)
+  // GET MANAGER ID TO PASS IN DELETE MODAL
+  const [managerId , setManagerId] = useState('')
+  
+  const openDeleteModal = (id:string) =>{
+    console.log(id)
+    setManagerId(id)
+    setOpen(!open)
+  }
 
-  return (
+  return (<>
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
       <TableContainer sx={{ maxHeight: 440 }}>
         <Table stickyHeader aria-label="sticky table">
@@ -66,12 +86,20 @@ const TableData: React.FC<Props> = ({ data, columns: headers }) => {
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {
                 return (
-                  <TableRow hover onClick={() => console.log(row._id)} role="checkbox" tabIndex={-1} key={row._id}>
+                  <TableRow hover role="checkbox" tabIndex={-1} key={row._id}>
                     {columns.map((column) => {
                       const value = row[column.id];
                       return (
-                        <TableCell key={column.id} >
-                          {value}
+                        <TableCell key={column.id}   >
+                          {column.id == "actions" ?
+                            <>
+                              <Button onClick={()=>openDeleteModal(row._id)} variant="outlined" >
+                                <DeleteIcon />
+                              </Button>
+                              <Button  variant="outlined" >
+                                <EditIcon />
+                              </Button>
+                            </> : value}
                         </TableCell>
                       );
                     })}
@@ -90,7 +118,9 @@ const TableData: React.FC<Props> = ({ data, columns: headers }) => {
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
-    </Paper>
+    </Paper >
+    {  <DeleteUserDialog setOpen={setOpen} open={open} managerId={managerId} />}
+    </>
   );
 };
 

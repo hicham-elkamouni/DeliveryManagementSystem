@@ -55,13 +55,14 @@ const CreateManager: React.FC = () => {
                 const config = {
                     headers: { Authorization: `Bearer ${token}` }
                 };
-                    let res = axios.post("http://localhost:3000/api/admin/createManager", values, config).then(res=>{
-                        navigate("/dashboard/admin/manageManagers/read", { replace: true });        
+                
+                let res = axios.post("http://localhost:3000/api/admin/createManager", values, config).then(res=>{
+                    navigate("/dashboard/admin/manageManagers/read", { replace: true });        
 
-                    }).catch((err)=>{
+                }).catch((err)=>{
 
-                        console.error(err);
-                    })
+                    console.error(err);
+                })
                
                
 

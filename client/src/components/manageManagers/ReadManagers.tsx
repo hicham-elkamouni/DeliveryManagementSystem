@@ -1,37 +1,33 @@
 import { Typography } from '@mui/material';
 import { FC, useState, useEffect } from 'react';
-import { useNavigate } from "react-router-dom";
+
 import CreateBtn from '../../layouts/buttons/CreateBtn';
 import TableData from '../../layouts/TableData'
 import useFetch from '../../Services/Utils/useFetch'
 interface Column {
-  id: 'username' | 'email' | 'createdAt' | 'updatedAt';
+  id: 'username' | 'email' | 'createdAt' | 'updatedAt' | 'actions';
   label: string;
 }
 
 const ReadManagers: FC = () => {
 
-  const navigate = useNavigate();
 
   const [data, setData] = useState([]);
 
   const { error, isPending } = useFetch("http://localhost:3000/api/admin/getAllManagers", setData);
 
-  function redirect(): void {
-    navigate("/dashboard/admin/manageManagers/create", { replace: true });
-  }
-  
+
   const columns: Column[] = [
     { id: 'username', label: 'User Name' },
     { id: 'email', label: 'Email' },
     { id: 'createdAt', label: 'Created At' },
     { id: 'updatedAt', label: 'Updated At' },
+    { id: 'actions', label: 'actions' },
   ]
   return <div>
+    <div className="mb-6" onClick={() => console.log('e')}>
 
-    
-    <div className="mb-6" onClick={() => redirect()}>
-    <CreateBtn name="Create"/>
+      <CreateBtn name="create" />
     </div>
     <Typography variant="h4" gutterBottom component="div">
       Managers
@@ -44,6 +40,4 @@ const ReadManagers: FC = () => {
   </div>;
 };
 
-
 export default ReadManagers;
-
